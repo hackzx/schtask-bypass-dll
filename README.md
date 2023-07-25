@@ -30,8 +30,14 @@ SID可以从whoami /all中当前所在组的别名中来找到
 
 ![1667727254525](https://user-images.githubusercontent.com/48757788/200163656-fad69c20-b056-41e2-aa30-2d2f0e000aa9.jpg)
 
+# Changed
 
+Dll_task_login.dll
 
+以当前用户，administrator权限添加计划任务 MicrosoftEdgeUpdateTaskUserS-1-5-21-4178988813-568853006-485972164-1000Core{B442A4BC-A486-404A-BD57-C9191931FBD1}
 
+```
+rundll32 Dll_task_login,DllMain c:\windows\system32\calc.exe
+```
 
 
